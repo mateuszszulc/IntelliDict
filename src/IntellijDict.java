@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: mateusz
@@ -7,6 +9,7 @@
 
 public class IntellijDict {
     public static void main(String[] args) {
-
+        JFrame j = new JFrame();
+        j.setVisible(true);
     }
 }

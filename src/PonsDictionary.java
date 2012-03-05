@@ -4,7 +4,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,28 +12,32 @@ import java.util.List;
  * Time: 21:19
  */
 public class PonsDictionary {
-    private final String ponsURL = null;
+    private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
 
     public static String get(String entry) {
-
-        return null;
-    }
-
-    public void todo() {
-    String timetableURL = sourceUrlForTimetables + lineNumber + ".html";
-
         Document doc = null;
         try {
-            System.out.println("Debug");
-            doc = Jsoup.connect(timetableURL).get();
-            System.out.println("Debug");
-
+            doc = Jsoup.connect(ponsURL).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Elements newsHeadlines = doc.select("#mp-itn b a");
+        Element de = doc.getElementById("pl");
+        Element results = de.getElementsByClass("results").first();
+        //Elements tables = results.getElementsByTag("table");
+        //Elements romfirst = results.getElementsByClass("rom");
+        Elements tables = results.getElementsByClass("translations");
+
+        //Element div1 = results.children().first();
+
+        //Element div2 = el1.getElementsByTag("div").first();
+        //Element div3 = div2.getElementsByTag("div").first();
+
+
+        //System.out.println(div3.html());
+        return null;
     }
-    public static List<BusStation> fetchPrimaryDirection(Document doc) {
+
+    /*public static List<BusStation> fetchPrimaryDirection(Document doc) {
         Elements linia = doc.getElementsByClass("linia");
         Element table = linia.first();
         Elements tbody = table.getElementsByTag("tbody");
@@ -57,6 +60,6 @@ public class PonsDictionary {
         }
 
         return null;
-    }
+    } */
 
 }

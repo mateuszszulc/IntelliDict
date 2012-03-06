@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../guava-10.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/guava-10.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,6 +29,15 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="JSoup" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

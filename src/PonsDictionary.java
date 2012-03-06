@@ -4,7 +4,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +18,7 @@ import java.util.Map;
 public class PonsDictionary {
     private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
 
-    public static String get(String entry) {
+    public static List<Map> getListOfResults(String entry) {
         Document doc = null;
         try {
             doc = Jsoup.connect(ponsURL).timeout(5000).get();
@@ -25,33 +27,28 @@ public class PonsDictionary {
         }
 
         Elements tables = getTranslationTablesForLanguage(doc, "pl");
+        List<Map> listOfResults = new ArrayList();
 
-        for ( Element table : tables ) {
+        for (Element table : tables) {
             String groupHeader = table.getElementsByTag("thead").first().text();
             Element tbody = table.getElementsByTag("tbody").first();
-
             Map<String, String> groupItems = getGroupItems(tbody);
-            //System.out.print(thead.text());
-//            Element th = thead.getElementsByTag("th").first();
-//            System.out.println(th.text());
-
+            listOfResults.add(groupItems);
         }
 
-        System.out.println(tables.html());
-        return null;
+        //System.out.println(tables.html());
+        return listOfResults;
     }
 
     private static Map<String, String> getGroupItems(Element tbody) {
         Map<String, String> groupItems = new HashMap();
         Elements rows = tbody.children();
-        for ( Element row : rows ) {
+        for (Element row : rows) {
             Element source = row.getElementsByClass("source").first();
             Element target = row.getElementsByClass("target").first();
-
-            System.out.println(source.text());
-            System.out.println(target.text());
+            groupItems.put(source.text(), target.text());
         }
-          return groupItems;
+        return groupItems;
     }
 
     public static Elements getTranslationTablesForLanguage(Document doc, String language) {
@@ -61,6 +58,12 @@ public class PonsDictionary {
     }
 
     /*public static unusedOldCode() {
+
+//            System.out.print(thead.text());
+//            Element th = thead.getElementsByTag("th").first();
+//            System.out.println(th.text());
+
+
         Elements linia = doc.getElementsByClass("linia");
         Element table = linia.first();
         Elements tbody = table.getElementsByTag("tbody");

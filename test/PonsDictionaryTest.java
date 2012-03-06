@@ -2,6 +2,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
+
 /**
 * Created by IntelliJ IDEA.
 * User: mateusz
@@ -17,7 +20,7 @@ public class PonsDictionaryTest {
     @Test
     public void testReturnHomeForDom()
     {
-        String result = PonsDictionary.get("Dom");
+        List<Map> listOfResults = PonsDictionary.getListOfResults("Dom");
         //Assert.assertEquals(result, "Home");
     }
 

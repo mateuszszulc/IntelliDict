@@ -17,16 +17,13 @@ import java.util.Map;
  */
 public class PonsDictionary {
     private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
+    private static Document doc;
 
     public static List<Map> getListOfResults(String entry) {
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(ponsURL).timeout(5000).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadDocument();
 
-        Elements tables = getTranslationTablesForLanguage(doc, "pl");
+        Elements tables = getTranslationTablesForLanguage("pl");
+
         List<Map> listOfResults = new ArrayList();
 
         for (Element table : tables) {
@@ -35,9 +32,15 @@ public class PonsDictionary {
             Map<String, String> groupItems = getGroupItems(tbody);
             listOfResults.add(groupItems);
         }
-
-        //System.out.println(tables.html());
         return listOfResults;
+    }
+
+    private static void loadDocument() {
+        try {
+            doc = Jsoup.connect(ponsURL).timeout(5000).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static Map<String, String> getGroupItems(Element tbody) {
@@ -51,7 +54,7 @@ public class PonsDictionary {
         return groupItems;
     }
 
-    public static Elements getTranslationTablesForLanguage(Document doc, String language) {
+    public static Elements getTranslationTablesForLanguage(String language) {
         Element languageDivElement = doc.getElementById(language);
         //Element results = languageDivElement.getElementsByClass("results").first();
         return languageDivElement.select("div.rom.first").first().getElementsByClass("translations");

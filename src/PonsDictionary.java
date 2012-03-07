@@ -4,6 +4,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,28 +17,56 @@ import java.io.IOException;
  */
 public class PonsDictionary {
     private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
+    private static Document doc;
 
-    public static String get(String entry) {
-        Document doc = null;
+    public static List<Map> getListOfResults(String entry) {
+        loadDocument();
+
+        Elements tables = getTranslationTablesForLanguage("pl");
+
+        List<Map> listOfResults = new ArrayList();
+
+        for (Element table : tables) {
+            String groupHeader = table.getElementsByTag("thead").first().text();
+            Element tbody = table.getElementsByTag("tbody").first();
+            Map<String, String> groupItems = getGroupItems(tbody);
+            listOfResults.add(groupItems);
+        }
+        return listOfResults;
+    }
+
+    private static void loadDocument() {
         try {
             doc = Jsoup.connect(ponsURL).timeout(5000).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Elements tables = getTranslationTablesForLanguage(doc, "pl");
-
-        System.out.println(tables.html());
-        return null;
     }
 
-    public static Elements getTranslationTablesForLanguage(Document doc, String language) {
-        Element de = doc.getElementById(language);
-        Element results = de.getElementsByClass("results").first();
-        return de.select("div.rom.first").first().getElementsByClass("translations");
+    private static Map<String, String> getGroupItems(Element tbody) {
+        Map<String, String> groupItems = new HashMap();
+        Elements rows = tbody.children();
+        for (Element row : rows) {
+            Element source = row.getElementsByClass("source").first();
+            Element target = row.getElementsByClass("target").first();
+            groupItems.put(source.text(), target.text());
+        }
+        return groupItems;
+    }
+
+    public static Elements getTranslationTablesForLanguage(String language) {
+        Element languageDivElement = doc.getElementById(language);
+        //Element results = languageDivElement.getElementsByClass("results").first();
+        return languageDivElement.select("div.rom.first").first().getElementsByClass("translations");
     }
 
     /*public static unusedOldCode() {
+
+//            System.out.print(thead.text());
+//            Element th = thead.getElementsByTag("th").first();
+//            System.out.println(th.text());
+
+
         Elements linia = doc.getElementsByClass("linia");
         Element table = linia.first();
         Elements tbody = table.getElementsByTag("tbody");

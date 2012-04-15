@@ -1,3 +1,5 @@
+package controllers;
+
 /**
  * Created by IntelliJ IDEA.
  * User: mateusz

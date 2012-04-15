@@ -1,3 +1,5 @@
+package testing.osvalidator;
+
 /**
  * Created by IntelliJ IDEA.
  * User: mateusz

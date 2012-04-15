@@ -6,5 +6,6 @@ package dictionaries;
  * Date: 15.04.12
  * Time: 12:17
  */
-public class PonsServiceListener {
+public interface PonsServiceListener {
+    public void actionPerformed(String entry);
 }

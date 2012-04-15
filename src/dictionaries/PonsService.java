@@ -21,6 +21,8 @@ import java.util.List;
  * Time: 12:15
  */
 public class PonsService {
+    //responsible for filtering/validation Clipboard content
+    //private ClipboardService clipboardService;
 
     private List<PonsServiceListener> listeners = new ArrayList<PonsServiceListener>();
 
@@ -31,6 +33,9 @@ public class PonsService {
             public void onEvent(ClipboardEvent event) {
                 String currentClipboardContent = getClipboardContents();
                 System.out.println("Works!!!!! = " + currentClipboardContent);
+                for ( PonsServiceListener listener : listeners ) {
+                    listener.actionPerformed(currentClipboardContent);
+                }
             }
         });
         wc.start();

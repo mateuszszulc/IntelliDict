@@ -1,3 +1,5 @@
+package testing.clipboardmonitor;
+
 import clipboard.monitor.ClipboardEvent;
 import clipboard.monitor.ClipboardListener;
 import clipboard.monitor.windows.WindowsClipboardMonitor;

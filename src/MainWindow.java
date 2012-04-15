@@ -1,4 +1,5 @@
 import dictionaries.PonsService;
+import dictionaries.PonsServiceListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +16,23 @@ import java.net.URL;
 public class MainWindow {
     private JFrame mainFrame;
     private JButton button;
-    private PonsService ponsService ;
+    private PonsService ponsService;
+    private TextField textField;
+    private MainWindowController mainWindowController;
+    private TrayIcon trayIcon;
 
     public MainWindow() {
         mainFrame = new JFrame();
         ponsService = new PonsService();
         button = new JButton("Press Me");
+        textField = new TextField();
 
         setupSystemTray();
 
+        mainFrame.setLayout(new FlowLayout());
         mainFrame.add(button);
+        mainFrame.add(textField);
+
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -32,15 +40,32 @@ public class MainWindow {
                 System.out.println("B Event dispatch thread = " + SwingUtilities.isEventDispatchThread());
             }
         });
+
+        ponsService.addPonsServiceListener(new PonsServiceListener() {
+            @Override
+            public void actionPerformed(final String entry) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        displayDictonaryEntry(entry);
+                    }
+                });
+            }
+        });
+
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
         mainFrame.pack();
     }
 
+    private void displayDictonaryEntry(String entry) {
+        trayIcon.displayMessage("Pons dictionary Entry", entry, TrayIcon.MessageType.INFO);
+    }
+
     private void setupSystemTray() {
         if (!SystemTray.isSupported()) return;
         SystemTray tray = SystemTray.getSystemTray();
-        TrayIcon trayIcon = new TrayIcon(createImage("bulb.gif", "IntellijDict"));
+        trayIcon = new TrayIcon(createImage("bulb.gif", "IntellijDict"));
         try {
             tray.add(trayIcon);
         } catch (AWTException e) {

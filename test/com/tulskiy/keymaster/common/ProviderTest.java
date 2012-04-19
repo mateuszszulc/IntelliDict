@@ -38,7 +38,7 @@ public class ProviderTest {
 
         final ArrayList<KeyStroke> strokes = new ArrayList<KeyStroke>();
 
-        for (int code = KeyEvent.VK_A; code <= KeyEvent.VK_Z; code++) {
+        for (int code = KeyEvent.VK_A; code <= KeyEvent.VK_B; code++) {
             strokes.add(KeyStroke.getKeyStroke(code, randomModifiers()));
         }
 
@@ -55,7 +55,7 @@ public class ProviderTest {
                 }
             });
         }
-        robot.delay(3000);
+        robot.delay(20000);
 
         synchronized (lock) {
             long start = System.currentTimeMillis();

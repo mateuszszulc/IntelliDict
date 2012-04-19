@@ -41,6 +41,7 @@ public class WindowsProvider extends Provider {
     private Boolean reset = false;
     private final Object lock = new Object();
     private Thread thread;
+    MSG msg = new MSG();
 
     private Map<Integer, HotKey> hotKeys = new HashMap<Integer, HotKey>();
     private Queue<HotKey> registerQueue = new LinkedList<HotKey>();
@@ -49,7 +50,7 @@ public class WindowsProvider extends Provider {
         Runnable runnable = new Runnable() {
             public void run() {
                 logger.info("Starting Windows global hotkey provider");
-                MSG msg = new MSG();
+
                 listen = true;
                 while (listen) {
                     while (PeekMessage(msg, null, 0, 0, PM_REMOVE)) {

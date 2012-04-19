@@ -25,9 +25,9 @@ public class PonsService {
     //private ClipboardService clipboardService;
 
     private List<PonsServiceListener> listeners = new ArrayList<PonsServiceListener>();
+    private WindowsClipboardMonitor wc = new WindowsClipboardMonitor();
 
     public PonsService() {
-        WindowsClipboardMonitor wc = new WindowsClipboardMonitor();
         wc.addListener(new ClipboardListener() {
             @Override
             public void onEvent(ClipboardEvent event) {
@@ -38,7 +38,6 @@ public class PonsService {
                 }
             }
         });
-        wc.start();
     }
 
     public void addPonsServiceListener(PonsServiceListener listener) {
@@ -74,5 +73,8 @@ public class PonsService {
             }
         }
         return result;
+    }
+    public void start() {
+          wc.start();
     }
 }

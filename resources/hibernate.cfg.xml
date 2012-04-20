@@ -31,10 +31,6 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="org.hibernate.tutorial.domain.Event"/>
-        <mapping class="org.hibernate.tutorial.domain.Person"/>
-
-
     </session-factory>
 
 </hibernate-configuration>

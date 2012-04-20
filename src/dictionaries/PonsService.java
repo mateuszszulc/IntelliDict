@@ -26,6 +26,7 @@ public class PonsService {
 
     private List<PonsServiceListener> listeners = new ArrayList<PonsServiceListener>();
     private WindowsClipboardMonitor wc = new WindowsClipboardMonitor();
+    private PonsDatabase ponsDatabase = new PonsInFileDatabase("ponsStorage.txt");
 
     public PonsService() {
         wc.addListener(new ClipboardListener() {
@@ -33,7 +34,7 @@ public class PonsService {
             public void onEvent(ClipboardEvent event) {
                 String currentClipboardContent = getClipboardContents();
                 System.out.println("Works!!!!! = " + currentClipboardContent);
-                for ( PonsServiceListener listener : listeners ) {
+                for (PonsServiceListener listener : listeners) {
                     listener.actionPerformed(currentClipboardContent);
                 }
             }
@@ -74,7 +75,8 @@ public class PonsService {
         }
         return result;
     }
+
     public void start() {
-          wc.start();
+        wc.start();
     }
 }

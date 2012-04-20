@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src-guava/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src-guava/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

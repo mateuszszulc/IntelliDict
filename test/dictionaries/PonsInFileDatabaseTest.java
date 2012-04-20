@@ -19,17 +19,16 @@ public class PonsInFileDatabaseTest {
     }
 
     @Test
+    public void testStoreEntry() {
+        ponsInFileDatabase.storeEntry("jas=maaaaaaaaaaaaaazabawke");
+        ponsInFileDatabase.storeEntry("mateusz=makasie");
+    }
+
+    @Test
     public void testGetPonsEntriesAsListOfRawText() throws Exception {
         for (String i : ponsInFileDatabase.getPonsEntriesAsListOfRawText()) {
             System.out.println(i);
         }
 
-    }
-
-
-    @Test
-    public void testStoreEntry() {
-        ponsInFileDatabase.storeEntry("jas=maaaaaaaaaaaaaazabawke");
-        ponsInFileDatabase.storeEntry("mateusz=makasie");
     }
 }

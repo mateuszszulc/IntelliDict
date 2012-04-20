@@ -84,7 +84,7 @@ public class PonsInFileDatabase implements PonsDatabase {
     public void saveToDatabase() {
         BufferedWriter bufferedWriter = null;
         try {
-            bufferedWriter = new BufferedWriter(new FileWriter(databaseFilename, true));
+            bufferedWriter = new BufferedWriter(new FileWriter(databaseFilename));
             List<String> allEntries = getPonsEntriesAsListOfRawText();
 
             for (String rawText : allEntries) {

@@ -30,11 +30,8 @@ public class MainWindow {
     private Provider provider;
 
     public MainWindow() {
-
         setupServiceProviders();
-
         setupGUI();
-
     }
 
     private void setupServiceProviders() {

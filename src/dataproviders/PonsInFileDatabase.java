@@ -1,6 +1,5 @@
 package dataproviders;
 
-import dataproviders.PonsDatabase;
 import model.PonsRow;
 
 import java.io.*;
@@ -81,7 +80,6 @@ public class PonsInFileDatabase implements PonsDatabase {
         return ponsEntries.remove(ponsRowWithoutTranslation);
     }
 
-    @Override
     public void saveToDatabase() {
         BufferedWriter bufferedWriter = null;
         try {

@@ -1,7 +1,5 @@
 package dataproviders;
 
-import model.PonsEntry;
-
 /**
  * Created by IntelliJ IDEA.
  * User: wro00305
@@ -17,6 +15,4 @@ public interface PonsDatabase {
     //PonsEntry getEntry(String baseWord);
 
     boolean deleteEntry(String baseWord);
-
-    void saveToDatabase();
 }

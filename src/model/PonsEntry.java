@@ -1,11 +1,6 @@
 package model;
 
-import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.swing.*;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +19,32 @@ public class PonsEntry {
     private Integer id;
 
     @Column
+    String baseWord;
+
+    @OneToMany
     List<PonsSubEntry> ponsSubEntryList = new ArrayList<PonsSubEntry>();
 
-    @Column
-    Spring baseWord;
+    public List<PonsSubEntry> getPonsSubEntryList() {
+        return ponsSubEntryList;
+    }
 
+    public void setPonsSubEntryList(List<PonsSubEntry> ponsSubEntryList) {
+        this.ponsSubEntryList = ponsSubEntryList;
+    }
 
+    public String getBaseWord() {
+        return baseWord;
+    }
+
+    public void setBaseWord(String baseWord) {
+        this.baseWord = baseWord;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

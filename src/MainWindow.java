@@ -3,6 +3,7 @@ import com.tulskiy.keymaster.common.HotKeyListener;
 import com.tulskiy.keymaster.common.Provider;
 import controllers.MainWindowController;
 import controllers.TrayController;
+import dataproviders.HibernateSessionFactoryManager;
 import dictionaries.PonsService;
 import dictionaries.PonsServiceListener;
 
@@ -30,6 +31,7 @@ public class MainWindow {
     private Provider provider;
 
     public MainWindow() {
+        HibernateSessionFactoryManager.getSessionFactory();
         setupServiceProviders();
         setupGUI();
     }

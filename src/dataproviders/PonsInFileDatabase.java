@@ -1,5 +1,6 @@
 package dataproviders;
 
+import model.PonsEntry;
 import model.PonsRow;
 
 import java.io.*;
@@ -66,12 +67,12 @@ public class PonsInFileDatabase implements PonsDatabase {
         return ponsEntries.size();
     }
 
-    @Override
-    public void storeEntry(String newEntry) {
+    public boolean storeEntry(String newEntry) {
         if (!ponsEntries.contains(PonsRow.createInstanceFromRawText(newEntry))) {
             ponsEntries.add(PonsRow.createInstanceFromRawText(newEntry));
-            saveToDatabase(); //is this a right moment to save?
+            return saveToDatabase(); //is this a right moment to save?
         }
+        return false;
     }
 
     @Override
@@ -80,8 +81,9 @@ public class PonsInFileDatabase implements PonsDatabase {
         return ponsEntries.remove(ponsRowWithoutTranslation);
     }
 
-    public void saveToDatabase() {
+    public boolean saveToDatabase() {
         BufferedWriter bufferedWriter = null;
+        boolean saveSuccessfully = false;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(databaseFilename));
             List<String> allEntries = getPonsEntriesAsListOfRawText();
@@ -91,11 +93,17 @@ public class PonsInFileDatabase implements PonsDatabase {
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
-
+            saveSuccessfully = true;
         } catch (IOException e) {
 
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        return saveSuccessfully;
+    }
+
+    @Override
+    public boolean storeEntry(PonsEntry newPonsEntry) {
+        return false;   //not implemented yet
     }
 
     @Override

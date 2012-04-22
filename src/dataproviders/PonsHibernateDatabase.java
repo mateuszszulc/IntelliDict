@@ -1,5 +1,8 @@
 package dataproviders;
 
+import model.PonsEntry;
+import org.hibernate.Session;
+
 /**
  * Created by IntelliJ IDEA.
  * User: mateusz
@@ -9,13 +12,17 @@ package dataproviders;
 public class PonsHibernateDatabase implements PonsDatabase {
 
     @Override
-    public void storeEntry(String newEntry) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public boolean storeEntry(PonsEntry newPonsEntry) {
+        Session session = HibernateSessionFactoryManager.getCurrentSession();
+        session.save(newPonsEntry);
+        session.getTransaction().commit();
+        return true;
     }
 
     @Override
     public String getEntry(String baseWord) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        return "";
     }
 
     @Override

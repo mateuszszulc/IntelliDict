@@ -1,5 +1,7 @@
 package dataproviders;
 
+import model.PonsEntry;
+
 /**
  * Created by IntelliJ IDEA.
  * User: wro00305
@@ -8,8 +10,8 @@ package dataproviders;
  * To change this template use File | Settings | File Templates.
  */
 public interface PonsDatabase {
-    void storeEntry(String newEntry);
-    //void storeEntry(PonsEntry ponsEntry);
+    //boolean storeEntry(String newEntry);
+    boolean storeEntry(PonsEntry newPonsEntry);
 
     String getEntry(String baseWord);
     //PonsEntry getEntry(String baseWord);

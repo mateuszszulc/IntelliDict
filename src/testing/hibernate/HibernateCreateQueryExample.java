@@ -15,7 +15,7 @@ import java.util.Map;
  * Date: 15.04.12
  * Time: 16:38
  */
-public class Main {
+public class HibernateCreateQueryExample {
     private static final SessionFactory ourSessionFactory;
 
     static {

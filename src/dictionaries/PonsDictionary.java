@@ -1,5 +1,7 @@
 package dictionaries;
 
+import dataproviders.PonsDatabase;
+import dataproviders.PonsInFileDatabase;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class PonsDictionary {
     private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
     private static Document doc;
+    private PonsDatabase ponsDatabase = new PonsInFileDatabase("ponsStorage.txt");
 
     public static List<Map> getListOfResults(String entry) {
         loadDocument();

@@ -3,8 +3,6 @@ package dictionaries;
 import clipboard.monitor.ClipboardEvent;
 import clipboard.monitor.ClipboardListener;
 import clipboard.monitor.windows.WindowsClipboardMonitor;
-import dataproviders.PonsDatabase;
-import dataproviders.PonsInFileDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +26,7 @@ public class PonsService {
 
     private List<PonsServiceListener> listeners = new ArrayList<PonsServiceListener>();
     private WindowsClipboardMonitor wc = new WindowsClipboardMonitor();
-    private PonsDatabase ponsDatabase = new PonsInFileDatabase("ponsStorage.txt");
+    private PonsDictionary ponsDictionary;
 
     public PonsService() {
         wc.addListener(new ClipboardListener() {

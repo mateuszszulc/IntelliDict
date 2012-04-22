@@ -1,4 +1,4 @@
-package dataproviders;
+package testing.hibernate;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.HibernateException;

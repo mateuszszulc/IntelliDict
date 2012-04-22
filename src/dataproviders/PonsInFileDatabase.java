@@ -1,5 +1,6 @@
-package dictionaries;
+package dataproviders;
 
+import dataproviders.PonsDatabase;
 import model.PonsRow;
 
 import java.io.*;

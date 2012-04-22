@@ -3,6 +3,8 @@ package dictionaries;
 import clipboard.monitor.ClipboardEvent;
 import clipboard.monitor.ClipboardListener;
 import clipboard.monitor.windows.WindowsClipboardMonitor;
+import dataproviders.PonsDatabase;
+import dataproviders.PonsInFileDatabase;
 
 import javax.swing.*;
 import java.awt.*;

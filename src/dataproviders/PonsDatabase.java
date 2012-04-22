@@ -1,4 +1,4 @@
-package dictionaries;
+package dataproviders;
 
 import model.PonsEntry;
 

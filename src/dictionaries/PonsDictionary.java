@@ -23,23 +23,30 @@ public class PonsDictionary {
     private static final String ponsURL = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl";
     private static final String polishToGerman = "http://pl.pons.eu/polski-niemiecki/";
     private static final String germanToPolish = "http://pl.pons.eu/niemiecki-polski/";
+
+    private static final String polishToGermanOneDirection = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl&in=pl&lf=pl";
+    private static final String polishToGermanTwoDirection = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl&in=&lf=pl";
+
+    private static final String germanToPolishOneDirection = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl&in=de&lf=de";
+    private static final String germanToPolishTwoDirection = "http://pl.pons.eu/dict/search/results/?q=dom&l=depl&in=&lf=de";
+
     private static Document doc;
     private PonsDatabase ponsDatabase = new PonsNullDatabase();  //new PonsInFileDatabase("ponsStorage.txt");
 
-    public static List<Map> getListOfResults(String entry) {
+    public static List<Map> getPonsEntry(String entry) {
         loadDocument();
 
-        Elements tables = getTranslationTablesForLanguage("pl");
+        Elements ponsEntryInHtml = extractPonsEntryInHtmlForSpecifiedLanguage("pl");
 
-        List<Map> listOfResults = new ArrayList<Map>();
+        List<Map> ponsEntry = new ArrayList<Map>();
 
-        for (Element table : tables) {
-            String groupHeader = table.getElementsByTag("thead").first().text();
-            Element tbody = table.getElementsByTag("tbody").first();
-            Map<String, String> groupItems = getGroupItems(tbody);
-            listOfResults.add(groupItems);
+        for (Element ponsSubEntryInHtml : ponsEntryInHtml) {
+            String ponsSubEntryHeader = ponsSubEntryInHtml.getElementsByTag("thead").first().text();
+            Element ponsSubEntryInTBodyElement = ponsSubEntryInHtml.getElementsByTag("tbody").first();
+            Map<String, String> ponsSubEntry = extractPonsSubEntryFromTBodyElement(ponsSubEntryInTBodyElement);
+            ponsEntry.add(ponsSubEntry);
         }
-        return listOfResults;
+        return ponsEntry;
     }
 
     private static void loadDocument() {
@@ -50,61 +57,20 @@ public class PonsDictionary {
         }
     }
 
-    private static Map<String, String> getGroupItems(Element tbody) {
-        Map<String, String> groupItems = new HashMap();
+    private static Map<String, String> extractPonsSubEntryFromTBodyElement(Element tbody) {
+        Map<String, String> ponsSubEntry = new HashMap();
         Elements rows = tbody.children();
         for (Element row : rows) {
             Element source = row.getElementsByClass("source").first();
             Element target = row.getElementsByClass("target").first();
-            groupItems.put(source.text(), target.text());
+            ponsSubEntry.put(source.text(), target.text());
         }
-        return groupItems;
+        return ponsSubEntry;
     }
 
-    public static Elements getTranslationTablesForLanguage(String language) {
+    public static Elements extractPonsEntryInHtmlForSpecifiedLanguage(String language) {
         Element languageDivElement = doc.getElementById(language);
         //Element results = languageDivElement.getElementsByClass("results").first();
         return languageDivElement.select("div.rom.first").first().getElementsByClass("translations");
     }
-
-    /*public static unusedOldCode() {
-
-//            System.out.print(thead.text());
-//            Element th = thead.getElementsByTag("th").first();
-//            System.out.println(th.text());
-
-
-        Elements linia = doc.getElementsByClass("linia");
-        Element table = linia.first();
-        Elements tbody = table.getElementsByTag("tbody");
-        Elements trElements = tbody.first().getElementsByTag("tr");
-
-        trElements.remove(0);
-        trElements.remove(0);
-
-        for (Element busStationTr : trElements) {
-            Elements trChildrens = busStationTr.children();
-
-            BusStation busStation = new BusStation();
-            busStation.setRoute(trChildrens.get(0).text());
-            busStation.setSourceUrl(trChildrens.get(1).getElementsByTag("a").first().attr("href"));
-            busStation.setName(trChildrens.get(1).text());
-
-            System.out.println("*******************************");
-            System.out.print(trChildrens.get(1).getElementsByTag("a").first().attr("href") + "  ");
-            System.out.println(trChildrens.get(1).text() + "  ");
-        }
-
-        //Element s = results.select("")
-        //Elements tables = results.getElementsByTag("table");
-        //Elements romfirst = de.select("div.rom.first");
-        //Elements tables = results.getElementsByClass("translations");
-        //Element div1 = results.children().first();
-        //Element div2 = el1.getElementsByTag("div").first();
-        //Element div3 = div2.getElementsByTag("div").first();
-
-
-        return null;
-    } */
-
 }
